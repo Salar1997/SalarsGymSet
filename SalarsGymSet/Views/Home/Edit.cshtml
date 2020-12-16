@@ -1,0 +1,61 @@
+﻿@model SalarsGymSet.Models.Gymset
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["textmsg"] != null)
+{
+    @Html.Raw(TempData["textmsg"])
+}
+
+<h1>Edit @Model.Exercise</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="User" class="control-label" hidden></label>
+                <input asp-for="User" class="form-control" value="@User.Identity.Name" required hidden />
+                <span asp-validation-for="User" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Exercise" class="control-label"></label>
+                <input asp-for="Exercise" class="form-control" required />
+                <span asp-validation-for="Exercise" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Set" class="control-label"></label>
+                <input asp-for="Set" class="form-control" required />
+                <span asp-validation-for="Set" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                    <label asp-for="Date" class="control-label"></label>
+                    <input asp-for="Date" type="date" class="form-control" required />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>*@
+            <div class="form-group">
+                <br /><p>Priority: </p>
+                @Html.RadioButtonFor(model => model.Difficulty, "Hard", new { @checked = true }) Hard
+                @Html.RadioButtonFor(model => model.Difficulty, "Medium", new { @checked = true }) Medium
+                @Html.RadioButtonFor(model => model.Difficulty, "Easy", new { @checked = true }) Easy
+                <span asp-validation-for="Difficulty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <form action="/Home">
+        <input type="submit" value="Back to Home" class="btn btn-primary" />
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,92 @@
+﻿@model IEnumerable<SalarsGymSet.Models.Gymset>
+
+@{ ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <h2>@TempData["errorMessage"]</h2>
+    <div style="padding-left:50%">
+        <form action="/Home" method="post" style="align-content:center" hidden>
+
+            <p>Select date to show gymSets</p>
+            <input type="date" name="date" value="@DateTime.Now" placeholder="@DateTime.Today" />
+            <input type="submit" name="submit" value="Show" class="btn btn-primary" />
+        </form>
+    </div>
+
+    <div class="container-fluid">
+        <div class="section mb-3">
+            <form action="/Home/Create" class="create-btn">
+                <input type="submit" value="Add new Exercise" class="btn btn-success" />
+            </form>
+            @*<form action="/Home" method="post" class="sort-filter-section">
+                    <div>|
+                        <input type="submit" name="submit" value="Filter" class="btn btn-primary" />
+                        <br /><p>Difficulty: </p>
+                        <input type="radio" name="priority" value="Hard" style="float:left;margin-right:10px" /><p>Hard</p>
+                        <input type="radio" name="priority" value="Medium" style="float:left;margin-right:10px" /><p>Medium</p>
+                        <input type="radio" name="priority" value="Easy" style="float:left;margin-right:10px" /><p>Easy</p>
+
+                    </div>
+                </form>*@
+        </div>
+        <div class="table-section">
+            <table class="table" style="background-color: #f9b862">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Exercise)
+                        </th>
+                        <th class="hide-in-mobile">
+                            @Html.DisplayNameFor(model => model.Set)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Difficulty)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (@Model.Count() == 0)
+                    {
+                        <h5 class="text-light">NO EXERCISE HAS BEEN ADDED</h5>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr style="background-color: whitesmoke">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Exercise)
+                                </td>
+                                <td class="hide-in-mobile">
+                                    @Html.DisplayFor(modelItem => item.Set)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Difficulty)
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Edit", "Home", new { id = item.Id })" class="btn btn-group" role="button">Edit</a> |
+                                    <a href="@Url.Action("Delete", "Home", new { id = item.Id })" class="btn btn-group" role="button">Done</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center" style="padding-top: 200px">
+
+        <p> You have to <a href="~/Account/Login">Log in</a> to see your GymSet.</p>
+        <p> Dont have a account?, <a href="~/Account/Login">Register</a> a new one.</p>
+    </div>
+}

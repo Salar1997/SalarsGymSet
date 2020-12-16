@@ -1,0 +1,47 @@
+﻿@model SalarsGymSet.Models.PrivateTrainerCard
+
+@{
+    ViewData["Title"] = "Private trainer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["textmsg"] != null)
+{
+    @Html.Raw(TempData["textmsg"])
+}
+
+<h1 class="text-light">Private Trainer</h1>
+
+<h4 class="text-light">Confirm your trainer Id </h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="PrivateTrainer">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PrivateTrainerId" class="control-label text-light"></label>
+                <input asp-for="PrivateTrainerId" required class="form-control" />
+                <span asp-validation-for="PrivateTrainerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrivateTrainerName" class="control-label text-light"></label>
+                <input asp-for="PrivateTrainerName" required class="form-control" />
+                <span asp-validation-for="PrivateTrainerName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" id="Submit" value="Submit" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <form action="/Home">
+        <input type="submit" value="Back to Home" class="btn btn-primary" />
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
